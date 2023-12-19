@@ -1,0 +1,46 @@
+{
+  "name": "ammojs3-issue-1",
+  "version": "0.0.0",
+  "type": "module",
+  "source": "src/index.tsx",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "start": "parcel src/index.html --host 0.0.0.0 --cert cert.crt --key cert.key",
+    "clean": "npm run clean:parcel && npm run clean:static",
+    "clean:parcel": "rm -rf .parcel-cache",
+    "clean:static": "rm -rf static",
+    "prestart": "npm run clean && npm run build:static",
+    "build": "npm run build:static && npm run build:parcel",
+    "build:parcel": "parcel build",
+    "build:static": "npm run build:static:ammojs && npm run build:static:pc",
+    "build:static:ammojs": "mkdir -p static/ammojs && cp -r node_modules/ammojs3/builds/* static/ammojs/",
+    "build:static:pc": "npm run build:static:pc:scripts",
+    "build:static:pc:scripts": "mkdir -p static/pc/scripts && cp -r node_modules/playcanvas-physics-advanced/scripts/* static/pc/scripts/",
+    "postinstall": "npm run make_dev_cert",
+    "make_dev_cert": "npx mkcert create-ca && npx mkcert create-cert",
+    "lint": "eslint",
+    "check": "tsc --noEmit",
+    "test": "npm test"
+  },
+  "author": "Isaac Valdez",
+  "license": "MIT",
+  "dependencies": {
+    "ammojs3": "^0.0.10",
+    "playcanvas-physics-advanced": "^1.68.3"
+  },
+  "devDependencies": {
+    "@parcel/packager-ts": "^2.10.3",
+    "@parcel/transformer-inline-string": "^2.10.3",
+    "@parcel/transformer-typescript-tsc": "^2.10.3",
+    "@parcel/transformer-typescript-types": "^2.10.3",
+    "@parcel/validator-typescript": "^2.10.3",
+    "parcel-bundler": "^1.12.5",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "typescript": "^5.3.3"
+  },
+  "@parcel/transformer-css": {
+    "cssModules": true
+  }
+}
