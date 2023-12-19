@@ -6,7 +6,7 @@ import { Application, BLEND_NORMAL, BODYGROUP_DYNAMIC, BODYGROUP_USER_1, BODYTYP
 // 6 - some clipping, frame rate drops significantly
 // 7 - crashes
 
-const layers = 7
+const layers = 5
 const length = 10
 const height = 0.5
 const radius = 0.5
@@ -68,6 +68,9 @@ export function ball(radius: number, i: number, j: number, layer: number) {
 
     entity.addComponent('collision', { type: 'sphere', radius })
     entity.addComponent('physics', { type: BODYTYPE_DYNAMIC, mass: 1, group, mask: group })
+    entity.physics.rigidBody.setCcdMotionThreshold(0.1)
+    entity.physics.rigidBody.setCcdSweptSphereRadius(radius)
+
     entity.addComponent('render', { type: 'sphere', material: material(layer) })
     entity.render.castShadows = true
     entity.render.receiveShadows = true
